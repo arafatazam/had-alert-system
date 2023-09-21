@@ -7,7 +7,7 @@ from keras.callbacks import TensorBoard
 from sklearn.model_selection import train_test_split
 
 
-processed_path = "hmdb51_processed"
+processed_path = "hmdb51_processed_filtered"
 
 actions = np.array(
     list(filter(lambda x: not x.startswith('.'), os.listdir(processed_path))))
@@ -20,7 +20,7 @@ def create_model():
     """
     model = Sequential()
     model.add(LSTM(64, return_sequences=True,
-              activation='relu', input_shape=(30, 136)))
+              activation='relu', input_shape=(16, 34)))
     model.add(LSTM(128, return_sequences=True, activation='relu'))
     model.add(LSTM(64, return_sequences=False, activation='relu'))
     model.add(Dense(64, activation='relu'))
@@ -56,9 +56,13 @@ def run():
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05)
     log_dir = os.path.join('log')
     callback = TensorBoard(log_dir=log_dir)
-    model.fit(X_train, y_train, epochs=2000 , callbacks=[callback])
+    model.fit(X_train, y_train, epochs=200 , callbacks=[callback])
     model.summary()
-    model.save('model.h5')
+
+    res = model.evaluate(X_test, y_test)
+    print('Test Accuracy:', res)
+
+    model.save('model2.h5')
 
 
 
