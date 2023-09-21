@@ -29,7 +29,7 @@ def get_frames(id):
 
 yolo = YOLO('yolov8n-pose.pt')
 model = tf.keras.models.load_model('model2.h5')
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture("https://www.youtube.com/watch?v=9-gWNtrH1e0")
 
 actual_fps = cap.get(cv2.CAP_PROP_FPS)
 desired_fps = 10
