@@ -7,7 +7,7 @@ from keras.callbacks import TensorBoard
 from sklearn.model_selection import train_test_split
 
 
-processed_path = "hmdb51_processed_filtered"
+processed_path = "hmdb51_processed"
 
 actions = np.array(
     list(filter(lambda x: not x.startswith('.'), os.listdir(processed_path))))
@@ -62,7 +62,7 @@ def run():
     res = model.evaluate(X_test, y_test)
     print('Test Accuracy:', res)
 
-    model.save('model2.h5')
+    model.save('model.h5')
 
 
 

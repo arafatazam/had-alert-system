@@ -6,9 +6,9 @@ from ultralytics import YOLO
 from collections import deque, defaultdict
 
 
-alarming_actions = ['hit', 'punch', 'run', 'shoot_gun']
+alarming_actions = ['hit', 'jump', 'punch', 'run', 'shoot_gun','throw']
 normal_actions = ['walk']
-processed_path = "hmdb51_processed_filtered"
+processed_path = "hmdb51_processed"
 actions = np.array(
     list(filter(lambda x: not x.startswith('.'), os.listdir(processed_path))))
 label_map = {label: idx for idx, label in enumerate(actions)}
@@ -28,7 +28,7 @@ def get_frames(id):
     return np.array([frames_map[id]])
 
 yolo = YOLO('yolov8n-pose.pt')
-model = tf.keras.models.load_model('model2.h5')
+model = tf.keras.models.load_model('model.h5')
 cap = cv2.VideoCapture("https://www.youtube.com/watch?v=9-gWNtrH1e0")
 
 actual_fps = cap.get(cv2.CAP_PROP_FPS)

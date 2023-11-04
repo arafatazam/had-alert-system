@@ -6,8 +6,8 @@ import numpy as np
 from ultralytics import YOLO
 
 dataset_path = "hmdb51"
-processed_path = "hmdb51_processed_filtered"
-alarming_actions = ['hit', 'punch', 'run', 'shoot_gun']
+processed_path = "hmdb51_processed"
+alarming_actions = ['hit', 'jump', 'punch', 'run', 'shoot_gun', 'throw']
 normal_actions = ['walk']
 actions = alarming_actions + normal_actions
 
