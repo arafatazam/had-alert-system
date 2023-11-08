@@ -2,9 +2,10 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 from keras.models import Sequential
-from keras.layers import LSTM, Dense
+from keras.layers import LSTM, Dense, Dropout
 from keras.utils import to_categorical
 from keras.callbacks import EarlyStopping
+import keras.regularizers as regularizers
 from sklearn.model_selection import train_test_split
 
 
@@ -20,17 +21,19 @@ def create_model():
     Create an LSTM deep learning model
     """
     model = Sequential()
-    model.add(LSTM(64, return_sequences=True,
-              activation='relu', input_shape=(16, 34)))
-    model.add(LSTM(128, return_sequences=True, activation='relu'))
-    model.add(LSTM(64, return_sequences=False, activation='relu'))
+    model.add(LSTM(32, return_sequences=True,
+                   activation='relu', input_shape=(16, 34),
+                   kernel_regularizer=regularizers.l2(1e-3)))
+    model.add(Dropout(0.2))
+    model.add(LSTM(32, return_sequences=False, activation='relu',
+                   kernel_regularizer=regularizers.l2(1e-3)))
+    model.add(Dropout(0.2))
     model.add(Dense(64, activation='relu'))
     model.add(Dense(32, activation='relu'))
     model.add(Dense(actions.shape[0], activation='softmax'))
     model.compile(optimizer='Adam', loss='categorical_crossentropy',
                   metrics=['accuracy'])
     return model
-
 
 def get_data_and_labels():
     """
